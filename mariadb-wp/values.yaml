@@ -1,0 +1,13 @@
+mariadb:
+  auth:
+    root_passwd: "abc123!"
+    database_name: "wp"
+    userid: "wpuser"
+    user_passwd: "987xyz!"
+
+wordpress:
+  mariadb:
+    host: mariadb10
+    database: wp
+    userid: wpuser
+    passwd: 987xyz!

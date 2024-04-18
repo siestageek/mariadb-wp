@@ -1,0 +1,24 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mariadb
+spec:
+  selector:
+    app: mariadb
+  ports:
+    - protocol: TCP
+      port: 3306
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: wp6
+spec:
+  selector:
+    app: wp6
+  ports:
+    - protocol: TCP
+      port: 80
+      nodePort: 32321
+  type: NodePort

@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mariadb10
+  labels:
+    app: mariadb10
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mariadb10
+  template:
+    metadata:
+      name: mariadb10
+      labels:
+        app: mariadb10
+    spec:
+      containers:
+        - name: mariadb10
+          image: mariadb:10.6.17
+          ports:
+            - containerPort: 3306
+              protocol: TCP
+          env:
+            - name: MARIADB_DATABASE
+              value: {{ .Values.mariadb.auth.database_name }}
+            - name: MARIADB_USER
+              value: {{ .Values.mariadb.auth.userid }}
+            - name: MARIADB_ROOT_PASSWORD
+              value: {{ .Values.mariadb.auth.root_passwd }}
+            - name: MARIADB_PASSWORD
+              value: {{ .Values.mariadb.auth.user_passwd }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wp6
+  labels:
+    role: wp6
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wp6
+  template:
+    metadata:
+      name: wp6
+      labels:
+        app: wp6
+    spec:
+      containers:
+        - name: wp6
+          image: wordpress
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          env:
+            - name: WORDPRESS_DB_HOST
+              value: mariadb
+            - name: WORDPRESS_DB_USER
+              value: {{ .Values.wordpress.mariadb.userid }}
+            - name: WORDPRESS_DB_NAME
+              value: {{ .Values.wordpress.mariadb.database }}
+            - name: WORDPRESS_DB_PASSWORD
+              value: {{ .Values.wordpress.mariadb.passwd }}
