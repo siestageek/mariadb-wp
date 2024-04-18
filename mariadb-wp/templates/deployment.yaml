@@ -56,7 +56,7 @@ spec:
               protocol: TCP
           env:
             - name: WORDPRESS_DB_HOST
-              value: mariadb
+              value: mariadb10
             - name: WORDPRESS_DB_USER
               value: {{ .Values.wordpress.mariadb.userid }}
             - name: WORDPRESS_DB_NAME
